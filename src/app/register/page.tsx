@@ -6,7 +6,9 @@ import Button from "@/components/ui/button";
 import Image from "next/image";
 import { Card, CardHeader, CardContent, cardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+/*
+wololo
+*/
 export default function Register() {
   return (
     <>
