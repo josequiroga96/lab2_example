@@ -43,7 +43,7 @@ export default function Login() {
                 <div className="w-full flex flex-col space-y-2">
                     <label className="text-sm font-medium"> Contraseña </label>
                     <input
-                        type="Contraseña"
+                        type="password"
                         placeholder = "Minimo 6 caracteres"
                         className="border rounded-full px-4 py-2 w-full"
                     />
@@ -53,7 +53,7 @@ export default function Login() {
                 <div className="w-full flex flex-col space-y-2">
                     <label className="text-sm font-medium"> Confirmar Contreseña </label>
                     <input
-                        type="confirm_password"
+                        type="password"
                         placeholder="Repeti tu contreseña"
                         className="border rounded-full px-4 py-2 w-full"
                     />
