@@ -1,3 +1,18 @@
+import { User } from "./types";
+
+export type SuccessResponse = {
+  success: boolean;
+  user: Omit<User, "password">;
+}
+
+type Transaction = {
+  id: string;
+  date: string;
+  description: string;
+  type: "ingreso" | "egreso";
+  status: "exitoso" | "rechazado";
+  amount: number;
+}
 
 const mockData = {
     user: {
@@ -5,7 +20,7 @@ const mockData = {
       name: "Usuario Demo",
       email: "demo@bank.com",
       password: "demo123",
-    },
+    } as User,
     account: {
       cbu: "2850590940090418135201",
       alias: "mi.alias.banco",
@@ -50,14 +65,14 @@ const mockData = {
         amount: -23500.25,
       },
       // ... more transactions would be loaded from the JSON file
-    ] as any[],
+    ] as Transaction[],
   }
   
   // Session management
   let currentSession: { userId: string; token: string } | null = null
 
 export const API = {
-    async register(email: string, password: string, name: string) {
+    async register(email: string, password: string, name: string): Promise<SuccessResponse> {
         // const response = await fetch("http://localhost:3000/api/register", {
         //     method: "POST",
         //     body: JSON.stringify({ email, password, name }),
@@ -75,13 +90,13 @@ export const API = {
         }
 
         // In a real app, this would create a new user
-        mockData.user = { id: "u_new", name, email, password }
+        mockData.user = { id: "u_new", name, email, password } as User; 
         currentSession = { userId: mockData.user.id, token: "mock_token_123" };
 
         return { success: true, user: { id: mockData.user.id, name, email } };
     },
 
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<SuccessResponse> {
         // const response = await fetch("http://localhost:3000/api/login", {
         //     method: "POST",
         //     body: JSON.stringify({ email, password }),
@@ -99,7 +114,7 @@ export const API = {
         return { success: true, user: { id: mockData.user.id, name: mockData.user.name, email: mockData.user.email } };
     },
 
-    async logout() {
+    async logout(): Promise<void> {
         // const response = await fetch("http://localhost:3000/api/logout", {
         //     method: "POST",
         //     headers: {
@@ -117,7 +132,7 @@ export const API = {
         currentSession = null;
     },
 
-    async getUser() {
+    async getUser(): Promise<User> {
         // const response = await fetch("http://localhost:3000/api/user", {
         //     method: "GET",
         //     headers: {
@@ -130,5 +145,8 @@ export const API = {
 
         return mockData.user;
     },
-    
+
+    isAuthenticated(): boolean {
+        return currentSession !== null;
+    },
 }
